@@ -33,28 +33,28 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<Todo> _todos = [];
 
-  final _listKey = GlobalKey<AnimatedListState>();
   final SlidableController slidableController = SlidableController();
 
   void _addTodo() async {
     Todo newTodo = await Navigator.push(
         context, MaterialPageRoute(builder: (context) => TodoForm()));
     if (newTodo != null) {
-      _todos.add(newTodo);
-      _listKey.currentState.insertItem(_todos.length - 1);
+      setState(() {
+        _todos.add(newTodo);
+      });
     }
   }
 
   void _deleteTodo(int index) {
-    Todo removedItem = _todos.removeAt(index);
-    _listKey.currentState.removeItem(
-        index, (context, animation) => _buildListItem(removedItem, index));
+    setState(() {
+      _todos.removeAt(index);
+    });
   }
 
   Widget _buildListItem(Todo todo, int index) {
     return Slidable(
       controller: slidableController,
-      key: Key('$todo.title'),
+      key: Key(todo.id),
       actionPane: SlidableScrollActionPane(),
       child: TodoRow(value: todo),
       secondaryActions: [
@@ -73,35 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      // body: ListView.separated(
-      //   padding: EdgeInsets.symmetric(vertical: 10),
-      //   itemCount: _todos.length,
-      //   itemBuilder: (BuildContext context, int index) {
-      //     return Slidable(
-      //       controller: slidableController,
-      //       key: Key('$index'),
-      //       actionPane: SlidableScrollActionPane(),
-      //       child: TodoRow(value: _todos[index]),
-      //       secondaryActions: [
-      //         IconSlideAction(
-      //             caption: 'Delete',
-      //             color: Colors.red,
-      //             icon: Icons.delete,
-      //             onTap: () => _deleteTodo(index))
-      //       ],
-      //     );
-      //   },
-      //   separatorBuilder: (BuildContext context, int index) {
-      //     return Divider();
-      //   },
-      // ),
-      body: AnimatedList(
-          key: _listKey,
-          initialItemCount: _todos.length,
-          itemBuilder: (context, index, animation) {
-            Todo currentTodo = _todos[index];
-            return _buildListItem(currentTodo, index);
-          }),
+      body: ListView.separated(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        itemCount: _todos.length,
+        itemBuilder: (BuildContext context, int index) {
+          var currentItem = _todos[index];
+          return _buildListItem(currentItem, index);
+        },
+        separatorBuilder: (BuildContext context, int index) {
+          return Divider();
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTodo,
         tooltip: 'Increment',
