@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist/models/todo_state.dart';
 
 import '../models/todo.dart';
 
 class TodoRow extends StatelessWidget {
   final Todo value;
-  TodoRow({Key key, this.value, @required this.changeCompleted})
-      : super(key: key);
-
-  final Function changeCompleted;
+  TodoRow({Key key, this.value}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,9 @@ class TodoRow extends StatelessWidget {
             Spacer(),
             Checkbox(
               value: value.completed,
-              onChanged: (state) => changeCompleted(value, state),
+              onChanged: (state) =>
+                  Provider.of<TodoState>(context, listen: false)
+                      .toggleComplete(value),
             )
           ],
         )));

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist/models/todo_state.dart';
 import 'models/todo.dart';
 
 class TodoForm extends StatefulWidget {
@@ -29,6 +31,7 @@ class _TodoFormState extends State<TodoForm> {
   void _saveForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      Provider.of<TodoState>(context, listen: false).addTodo(_formValue);
       Navigator.pop(context, _formValue);
     }
   }

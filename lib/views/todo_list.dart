@@ -1,36 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todolist/models/todo.dart';
+import 'package:todolist/models/todo_state.dart';
 import 'package:todolist/views/todo_row.dart';
 
 class TodoList extends StatelessWidget {
-  TodoList(
-      {Key key,
-      @required this.todos,
-      @required this.deleteItem,
-      @required this.changeCompleted})
-      : super(key: key);
+  TodoList({Key key, @required this.todos}) : super(key: key);
   final List<Todo> todos;
-  final Function deleteItem;
-  final Function changeCompleted;
-
   final SlidableController _slidableController = SlidableController();
 
-  Widget _buildListItem(Todo todo) {
+  Widget _buildListItem(Todo todo, BuildContext context) {
     return Slidable(
       controller: _slidableController,
       key: Key(todo.id),
       actionPane: SlidableScrollActionPane(),
       child: TodoRow(
         value: todo,
-        changeCompleted: changeCompleted,
       ),
       secondaryActions: [
         IconSlideAction(
             caption: 'Delete',
             color: Colors.red,
             icon: Icons.delete,
-            onTap: () => deleteItem(todo))
+            onTap: () =>
+                Provider.of<TodoState>(context, listen: false).removeTodo(todo))
       ],
     );
   }
@@ -43,7 +37,7 @@ class TodoList extends StatelessWidget {
         itemCount: todos.length,
         itemBuilder: (BuildContext context, int index) {
           var currentItem = todos[index];
-          return _buildListItem(currentItem);
+          return _buildListItem(currentItem, context);
         },
         separatorBuilder: (BuildContext context, int index) {
           return Divider();

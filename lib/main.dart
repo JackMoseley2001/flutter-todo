@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todolist/completed_todo_list.dart';
+import 'models/todo_state.dart';
 import 'not_completed_todo_list.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => TodoState(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
