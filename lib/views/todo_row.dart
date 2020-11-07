@@ -4,34 +4,40 @@ import '../models/todo.dart';
 
 class TodoRow extends StatelessWidget {
   final Todo value;
-  TodoRow({Key key, this.value}) : super(key: key);
+  TodoRow({Key key, this.value, @required this.changeCompleted})
+      : super(key: key);
+
+  final Function changeCompleted;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        minimum: EdgeInsets.all(10),
+        bottom: false,
         child: Container(
-            padding: EdgeInsets.all(10),
+            // padding: EdgeInsets.all(10),
             child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      value.title,
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    if (value.description.isNotEmpty)
-                      Text(
-                        value.description,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      )
-                  ],
+                Text(
+                  value.title,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
-                Spacer(),
-                Checkbox(
-                  value: value.completed,
-                )
+                if (value.description.isNotEmpty)
+                  Text(
+                    value.description,
+                    style: Theme.of(context).textTheme.bodyText1,
+                  )
               ],
-            )));
+            ),
+            Spacer(),
+            Checkbox(
+              value: value.completed,
+              onChanged: (state) => changeCompleted(value, state),
+            )
+          ],
+        )));
   }
 }
