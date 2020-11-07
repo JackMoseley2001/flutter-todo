@@ -1,6 +1,6 @@
 # Todo List
 
-A cross platform Todo list app made in flutter, written whilst learning flutter
+A cross platform Todo list app made using flutter, written as a test application
 
 ## Getting Started
 
