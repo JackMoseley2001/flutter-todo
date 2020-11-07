@@ -50,7 +50,8 @@ class _TodoFormState extends State<TodoForm> {
             child: SingleChildScrollView(
                 child: Form(
               key: _formKey,
-              child: Column(children: [
+              child: SafeArea(
+                  child: Column(children: [
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: TextFormField(
@@ -71,7 +72,7 @@ class _TodoFormState extends State<TodoForm> {
                   child: Text('Save'),
                   onPressed: _saveForm,
                 )
-              ]),
+              ])),
             ))));
   }
 }
