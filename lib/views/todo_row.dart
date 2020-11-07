@@ -17,26 +17,31 @@ class TodoRow extends StatelessWidget {
             // padding: EdgeInsets.all(10),
             child: Row(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  value.title,
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                if (value.description.isNotEmpty)
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Text(
-                    value.description,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-              ],
+                    value.title,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
+                  if (value.description.isNotEmpty)
+                    Text(
+                      value.description,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    )
+                ],
+              ),
+              flex: 9,
             ),
-            Spacer(),
-            Checkbox(
-              value: value.completed,
-              onChanged: (state) =>
-                  Provider.of<TodoState>(context, listen: false)
-                      .toggleComplete(value),
+            Expanded(
+              child: Checkbox(
+                value: value.completed,
+                onChanged: (state) =>
+                    Provider.of<TodoState>(context, listen: false)
+                        .toggleComplete(value),
+              ),
+              flex: 1,
             )
           ],
         )));
