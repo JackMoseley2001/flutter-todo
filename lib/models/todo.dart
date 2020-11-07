@@ -7,5 +7,5 @@ class Todo {
   String description;
   bool completed = false;
 
-  Todo({@required this.title, this.description, this.completed});
+  Todo({@required this.title, this.description});
 }
