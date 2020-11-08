@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'todo_form.dart';
+import 'package:todolist/todo_form.dart';
 
-import 'models/todo_state.dart';
+import 'package:todolist/models/todo_state.dart';
 import 'package:todolist/views/todo_list.dart';
 
 class NotCompletedTodoList extends StatefulWidget {

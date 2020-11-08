@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/completed_todo_list.dart';
-import 'models/todo_state.dart';
-import 'not_completed_todo_list.dart';
+import 'package:todolist/models/todo_state.dart';
+import 'package:todolist/not_completed_todo_list.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(

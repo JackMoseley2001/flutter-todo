@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/models/todo_state.dart';
-import 'models/todo.dart';
+import 'package:todolist/models/todo.dart';
 
 class TodoForm extends StatefulWidget {
   TodoForm({Key key}) : super(key: key);
